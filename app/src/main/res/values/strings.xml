@@ -48,4 +48,11 @@
     <string name="intent_extra_product">intent_extra_product</string>
     <string name="title_activity_create_employee">CreateEmployeeActivity</string>
     <string name="title_activity_main">MainActivity</string>
+    <string name="title_summary">Transaction Summary</string>
+    <string name="summary_product">Product</string>
+    <string name="summary_price">Price</string>
+    <string name="summary_quantity">Quantity</string>
+    <string name="summary_total">Total: </string>
+    <string name="summary_complete">Complete Transaction?</string>
+    <string name="action_settings">Settings</string>
 </resources>
