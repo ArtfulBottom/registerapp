@@ -53,6 +53,28 @@ public class Product implements ConvertToJsonInterface, LoadFromJsonInterface<Pr
 		return this;
 	}
 
+	private double price;
+
+	public double getPrice() {
+		return this.price;
+	}
+
+	public Product setPrice(double price) {
+		this.price = price;
+		return this;
+	}
+
+	private boolean active;
+
+	public boolean getActive() {
+		return this.active;
+	}
+
+	public Product setActive(boolean active) {
+		this.active = active;
+		return this;
+	}
+
 	private ProductApiRequestStatus apiRequestStatus;
 	public ProductApiRequestStatus getApiRequestStatus() {
 		return this.apiRequestStatus;
@@ -86,6 +108,8 @@ public class Product implements ConvertToJsonInterface, LoadFromJsonInterface<Pr
 
 		this.lookupCode = rawJsonObject.optString(ProductFieldName.LOOKUP_CODE.getFieldName());
 		this.count = rawJsonObject.optInt(ProductFieldName.COUNT.getFieldName());
+		this.active = rawJsonObject.optBoolean(ProductFieldName.ACTIVE.getFieldName());
+		this.price = rawJsonObject.optDouble(ProductFieldName.PRICE.getFieldName());
 
 		value = rawJsonObject.optString(ProductFieldName.CREATED_ON.getFieldName());
 		if (!StringUtils.isBlank(value)) {
@@ -114,6 +138,8 @@ public class Product implements ConvertToJsonInterface, LoadFromJsonInterface<Pr
 			jsonObject.put(ProductFieldName.ID.getFieldName(), this.id.toString());
 			jsonObject.put(ProductFieldName.LOOKUP_CODE.getFieldName(), this.lookupCode);
 			jsonObject.put(ProductFieldName.COUNT.getFieldName(), this.count);
+			jsonObject.put(ProductFieldName.ACTIVE.getFieldName(), this.active);
+			jsonObject.put(ProductFieldName.PRICE.getFieldName(), this.price);
 			jsonObject.put(ProductFieldName.CREATED_ON.getFieldName(), (new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS", Locale.US)).format(this.createdOn));
 			jsonObject.put(ProductFieldName.API_REQUEST_MESSAGE.getFieldName(), this.apiRequestMessage);
 			jsonObject.put(ProductFieldName.API_REQUEST_STATUS.getFieldName(), this.apiRequestStatus.name());
@@ -125,6 +151,8 @@ public class Product implements ConvertToJsonInterface, LoadFromJsonInterface<Pr
 	}
 
 	public Product() {
+		this.price = 0.0;
+		this.active = false;
 		this.count = -1;
 		this.lookupCode = "";
 		this.id = new UUID(0, 0);
@@ -134,6 +162,8 @@ public class Product implements ConvertToJsonInterface, LoadFromJsonInterface<Pr
 	}
 
 	public Product(ProductTransition productTransition) {
+		this.active = productTransition.getActive();
+		this.price = productTransition.getPrice();
 		this.id = productTransition.getId();
 		this.count = productTransition.getCount();
 		this.apiRequestMessage = StringUtils.EMPTY;
