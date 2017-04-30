@@ -13,9 +13,13 @@ import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.RelativeLayout.LayoutParams;
+import android.widget.TableLayout;
+import android.widget.TableRow;
 import android.widget.TextView;
 
 import org.apache.commons.lang3.StringUtils;
@@ -36,7 +40,8 @@ public class CreateTransactionActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_transaction);
-        setRelativeLayout();
+        //setRelativeLayout();
+        setTableLayout();
         setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
 
         ActionBar actionBar = this.getSupportActionBar();
@@ -56,12 +61,20 @@ public class CreateTransactionActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private RelativeLayout layout;
+ /*   private RelativeLayout layout;
     public void setRelativeLayout() {
         layout = (RelativeLayout) this.findViewById(R.id.transaction_relative_layout);
     }
     public RelativeLayout getRelativeLayout() {
         return this.layout;
+    }
+*/
+    private TableLayout tableLayout;
+    public void setTableLayout() {
+        tableLayout = (TableLayout) this.findViewById(R.id.transaction_table_layout);
+    }
+    public TableLayout getTableLayout() {
+        return this.tableLayout;
     }
 
     public void addProductButtonOnClick(View view) {
@@ -82,29 +95,48 @@ public class CreateTransactionActivity extends AppCompatActivity {
             show();
     }
 
-    private ArrayList<Product> products = null;
+
+    private ArrayList<TransactionEntry> entries = null;
     private int lastId;
     public void addProductToView(Product product) {
-        if (products == null) {
-            products = new ArrayList<>();
+        if (entries == null) {
+            entries = new ArrayList<>();
         }
 
-        this.products.add(product);
+        TransactionEntry entry = new TransactionEntry();
+        int selectedQuantity = 1;
+        entry.setProductId(product.getId());
+        entry.setUnitPrice(product.getPrice());
+        entry.setQuantity(selectedQuantity);
+        this.entries.add(entry);
 
-        LayoutParams params = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-        params.setMargins(10, 10, 10, 10);
-        params.addRule(RelativeLayout.BELOW, lastId);
+        TableRow row = new TableRow(this);
+        TableRow.LayoutParams lp = new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT);
+        lp.setMargins(10, 10, 10, 10);
+        row.setLayoutParams(lp);
 
-        TextView text = new TextView(this.getApplicationContext());
-        lastId = this.products.size();
-        text.setId(lastId);
-        text.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
-        text.setText(product.getLookupCode());
-        text.setTextSize(20);
+        TextView lookup = new TextView(this);
+        lookup.setText(product.getLookupCode());
+        row.addView(lookup);
+
+        TextView price = new TextView(this);
+        price.setText("" + product.getPrice());
+        row.addView(price);
+
+        TextView quantity = new TextView(this);
+        quantity.setText("" + selectedQuantity);
+        row.addView(quantity);
+
+        ImageButton removeBtn = new ImageButton(this);
+        removeBtn.setImageResource(R.drawable.trash_can);
+        row.addView(removeBtn);
+
+        this.getTableLayout().addView(row);
+
+/*        text.setTextSize(20);
         text.setLayoutParams(params);
         text.setTextColor(Color.BLACK);
-
-        this.getRelativeLayout().addView(text);
+*/
     }
 
     private class AddProductTask extends AsyncTask<String, Void, Product> {
