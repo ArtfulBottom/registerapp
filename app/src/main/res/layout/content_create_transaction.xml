@@ -41,6 +41,6 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:text="@string/button_save"
+        android:text="@string/button_checkout"
         android:onClick="saveButtonOnClick"/>
 </RelativeLayout>

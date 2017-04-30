@@ -2,6 +2,7 @@
     <string name="app_name">UARKRegisterApp</string>
     <string name="title_activity_products_listing">Products</string>
     <string name="title_activity_product_view">ProductViewActivity</string>
+    <string name="button_checkout">Checkout</string>
     <string name="button_save">Save</string>
     <string name="button_ok">OK</string>
     <string name="button_dismiss">Dismiss</string>
