@@ -1,5 +1,4 @@
 package edu.uark.uarkregisterapp.models.api.fields;
-
 import edu.uark.uarkregisterapp.models.api.interfaces.FieldNameInterface;
 
 public enum EmployeeFieldName implements FieldNameInterface {
@@ -24,3 +23,4 @@ public enum EmployeeFieldName implements FieldNameInterface {
 		this.fieldName = fieldName;
 	}
 }
+

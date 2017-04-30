@@ -39,6 +39,10 @@
             android:label="@string/title_activity_main"
             android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
+            android:name=".CreateTransactionActivity"
+            android:label="@string/title_activity_transaction"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
             android:name=".SummaryActivity"
             android:label="@string/title_summary"
             android:textSize="15sp"
