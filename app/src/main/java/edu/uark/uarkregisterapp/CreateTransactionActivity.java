@@ -12,6 +12,7 @@ import android.text.InputType;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.RelativeLayout.LayoutParams;
@@ -57,7 +58,7 @@ public class CreateTransactionActivity extends AppCompatActivity {
 
     private RelativeLayout layout;
     public void setRelativeLayout() {
-        layout = (RelativeLayout) this.findViewById(R.id.scroll_view_relative_layout);
+        layout = (RelativeLayout) this.findViewById(R.id.transaction_relative_layout);
     }
     public RelativeLayout getRelativeLayout() {
         return this.layout;
@@ -82,6 +83,7 @@ public class CreateTransactionActivity extends AppCompatActivity {
     }
 
     private ArrayList<Product> products = null;
+    private int lastId;
     public void addProductToView(Product product) {
         if (products == null) {
             products = new ArrayList<>();
@@ -89,10 +91,17 @@ public class CreateTransactionActivity extends AppCompatActivity {
 
         this.products.add(product);
 
+        LayoutParams params = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+        params.setMargins(10, 10, 10, 10);
+        params.addRule(RelativeLayout.BELOW, lastId);
+
         TextView text = new TextView(this.getApplicationContext());
+        lastId = this.products.size();
+        text.setId(lastId);
         text.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
         text.setText(product.getLookupCode());
         text.setTextSize(20);
+        text.setLayoutParams(params);
         text.setTextColor(Color.BLACK);
 
         this.getRelativeLayout().addView(text);
