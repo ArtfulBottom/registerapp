@@ -9,6 +9,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.InputType;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
@@ -98,6 +99,7 @@ public class CreateTransactionActivity extends AppCompatActivity {
 
     private ArrayList<TransactionEntry> entries = null;
     private int lastId;
+    private final int textSize = 18;
     public void addProductToView(Product product) {
         if (entries == null) {
             entries = new ArrayList<>();
@@ -111,20 +113,30 @@ public class CreateTransactionActivity extends AppCompatActivity {
         this.entries.add(entry);
 
         TableRow row = new TableRow(this);
-        TableRow.LayoutParams lp = new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT);
-        lp.setMargins(10, 10, 10, 10);
+        TableRow.LayoutParams lp = new TableRow.LayoutParams(LayoutParams.MATCH_PARENT);
+        //lp.setMargins(10, 10, 10, 10);
         row.setLayoutParams(lp);
 
         TextView lookup = new TextView(this);
+        lookup.setTextColor(Color.BLACK);
+        lookup.setTextSize(textSize);
         lookup.setText(product.getLookupCode());
         row.addView(lookup);
 
         TextView price = new TextView(this);
-        price.setText("" + product.getPrice());
+        price.setTextColor(Color.BLACK);
+        price.setTextSize(textSize);
+        price.setText(Double.toString(product.getPrice()));
+        price.setGravity(Gravity.RIGHT);
+
         row.addView(price);
 
-        TextView quantity = new TextView(this);
-        quantity.setText("" + selectedQuantity);
+        EditText quantity = new EditText(this);
+        quantity.setInputType(InputType.TYPE_CLASS_NUMBER);
+        quantity.setTextColor(Color.BLACK);
+        quantity.setTextSize(textSize);
+        quantity.setText(Integer.toString(selectedQuantity));
+        quantity.setGravity(Gravity.RIGHT);
         row.addView(quantity);
 
         ImageButton removeBtn = new ImageButton(this);
@@ -143,6 +155,10 @@ public class CreateTransactionActivity extends AppCompatActivity {
         @Override
         protected Product doInBackground(String... params) {
             if (params.length > 0) {
+              /*  Log.d("lookupcode=",params[0]);
+                Product ret = (new ProductService()).getProductByLookupCode(params[0]);
+                Log.d("price=", Double.toString(ret.getPrice()));
+              */
                 return (new ProductService()).getProductByLookupCode(params[0]);
             } else {
                 return (new Product()).
