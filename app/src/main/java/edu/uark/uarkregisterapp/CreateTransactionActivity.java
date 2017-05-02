@@ -33,10 +33,23 @@ public class CreateTransactionActivity extends AppCompatActivity {
     }
 
     @Override
+    public void onBackPressed() {
+        if (!transactionViewWrapper.isTableEmpty()) {
+            confirmExit();
+        } else {
+            super.onBackPressed();
+        }
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:  // Respond to the action bar's Up/Home button
-                confirmExit();
+                if (!transactionViewWrapper.isTableEmpty()) {
+                    confirmExit();
+                } else {
+                    this.finish();
+                }
                 return true;
         }
 

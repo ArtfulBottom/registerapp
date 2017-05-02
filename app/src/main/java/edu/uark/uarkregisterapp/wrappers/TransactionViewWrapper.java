@@ -32,6 +32,10 @@ public class TransactionViewWrapper extends TransactionViewConstants {
         return this.tableLayout;
     }
 
+    public boolean isTableEmpty() {
+        return this.getTableLayout().getChildCount() == 0 ? true : false;
+    }
+
     private TransactionViewWrapper addButtonToRow(Context context, int resId, TableRow row) {
         ImageButton button = new ImageButton(context);
         button.setImageResource(resId);
