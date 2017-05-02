@@ -33,7 +33,7 @@ public class TransactionViewWrapper extends TransactionViewConstants {
     }
 
     public boolean isTableEmpty() {
-        return this.getTableLayout().getChildCount() == 0 ? true : false;
+        return this.getTableLayout().getChildCount() == 1 ? true : false;
     }
 
     private TransactionViewWrapper addButtonToRow(Context context, int resId, TableRow row) {

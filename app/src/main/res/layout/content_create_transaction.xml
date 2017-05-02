@@ -12,131 +12,50 @@
     tools:context="edu.uark.uarkregisterapp.CreateTransactionActivity"
     tools:showIn="@layout/activity_create_transaction">
 
-    <TableLayout
-        android:id="@+id/transaction_table_layout_header"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:stretchColumns="0,1,2"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="40dp">
-        <TableRow
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_weight="1">
-            <TextView
-                android:text="Lookup code"
-                android:layout_weight="1"
-                android:gravity="left"/>
-
-            <TextView
-                android:text="Price"
-                android:layout_weight="1"
-                android:layout_gravity="right"/>
-
-            <TextView
-                android:text="Quantity"
-                android:layout_weight="1"
-                android:layout_gravity="right"/>
-
-            <TextView
-                android:text="Remove"
-                android:layout_weight="1"
-                android:layout_gravity="right"/>
-        </TableRow>
-    </TableLayout>
-
     <ScrollView
         android:id="@+id/transaction_scroll_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="@dimen/abc_action_bar_default_height_material"
         android:layout_marginBottom="@dimen/abc_action_bar_default_height_material">
-    <!--
-            <RelativeLayout
-                android:id="@+id/transaction_relative_layout"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-       -->
-            <TableLayout
-                android:id="@+id/transaction_table_layout"
+
+        <TableLayout
+            android:id="@+id/transaction_table_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:stretchColumns="0,1,2">
+
+            <TableRow
+                android:id="@+id/permanent_table_row"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:stretchColumns="0,1,2">
-    <!--
-            <TableRow>
+                android:orientation="horizontal"
+                android:layout_weight="1">
                 <TextView
-                    android:id="@+id/remove_from_cart"
-                    android:layout_column="1"
-                    android:text="Open..."
-                    android:padding="3dip" />
-                <TextView
-                    android:text="Ctrl-O"
-                    android:gravity="right"
-                    android:padding="3dip" />
-            </TableRow>
+                    android:text="Lookup code"
+                    android:layout_weight="1"
+                    android:gravity="left"/>
 
-            <TableRow>
                 <TextView
-                    android:layout_column="1"
-                    android:text="Save..."
-                    android:padding="3dip" />
-                <TextView
-                    android:text="Ctrl-S"
-                    android:gravity="right"
-                    android:padding="3dip" />
-            </TableRow>
+                    android:text="Price"
+                    android:layout_weight="1"
+                    android:layout_gravity="right"/>
 
-            <TableRow>
                 <TextView
-                    android:layout_column="1"
-                    android:text="Save As..."
-                    android:padding="3dip" />
+                    android:text="Quantity"
+                    android:layout_weight="1"
+                    android:layout_gravity="center"/>
+
                 <TextView
-                    android:text="Ctrl-Shift-S"
-                    android:gravity="right"
-                    android:padding="3dip" />
+                    android:text="Remove"
+                    android:layout_weight="1"
+                    android:layout_gravity="right"/>
             </TableRow>
 
             <View
-                android:layout_height="2dip"
-                android:background="#FF909090" />
-
-            <TableRow>
-                <TextView
-                    android:text="X"
-                    android:padding="3dip" />
-                <TextView
-                    android:text="Import..."
-                    android:padding="3dip" />
-            </TableRow>
-
-            <TableRow>
-                <TextView
-                    android:text="X"
-                    android:padding="3dip" />
-                <TextView
-                    android:text="Export..."
-                    android:padding="3dip" />
-                <TextView
-                    android:text="Ctrl-E"
-                    android:gravity="right"
-                    android:padding="3dip" />
-            </TableRow>
-
-            <View
-                android:layout_height="2dip"
-                android:background="#FF909090" />
-
-            <TableRow>
-                <TextView
-                    android:layout_column="1"
-                    android:text="Quit"
-                    android:padding="3dip" />
-            </TableRow>
-            -->
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@android:color/darker_gray"/>
         </TableLayout>
     </ScrollView>
 
