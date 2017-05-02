@@ -29,28 +29,28 @@
                 android:id="@+id/permanent_table_row"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_weight="1">
+                android:orientation="horizontal">
                 <TextView
                     android:text="Lookup code"
-                    android:layout_weight="1"
-                    android:gravity="left"/>
+                    android:gravity="left" />
 
                 <TextView
                     android:text="Price"
-                    android:layout_weight="1"
                     android:layout_gravity="right"/>
 
                 <TextView
                     android:text="Quantity"
-                    android:layout_weight="1"
                     android:layout_gravity="center"/>
 
                 <TextView
                     android:text="Remove"
-                    android:layout_weight="1"
                     android:layout_gravity="right"/>
             </TableRow>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@android:color/darker_gray"/>
 
             <View
                 android:layout_width="match_parent"
