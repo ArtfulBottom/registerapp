@@ -4,6 +4,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -157,6 +158,7 @@ public class Transaction implements ConvertToJsonInterface, LoadFromJsonInterfac
     }
 
     public Transaction() {
+        this.id = new UUID(0, 0);
         this.cashierId = new UUID(0, 0);
         this.totalAmount = 0;
         this.classification = TransactionClassification.NOT_DEFINED;

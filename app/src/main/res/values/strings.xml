@@ -3,8 +3,10 @@
     <string name="title_activity_products_listing">Products</string>
     <string name="title_activity_product_view">ProductViewActivity</string>
     <string name="button_checkout">Checkout</string>
+    <string name="button_order">Order</string>
     <string name="button_save">Save</string>
     <string name="button_ok">OK</string>
+    <string name="button_cancel">Cancel</string>
     <string name="button_dismiss">Dismiss</string>
     <string name="button_all_products">Show All Products</string>
     <string name="button_sign_in">Sign In</string>
@@ -24,6 +26,7 @@
     <string name="text_view_label_products_lookup_code">Lookup Code:</string>
     <string name="text_view_label_products_count">Count:</string>
     <string name="text_view_label_products_created_on">Created On:</string>
+    <string name="text_view_total_price">Total Price:</string>
     <string name="edit_text_hint_employee_create_first_name">First name</string>
     <string name="edit_text_hint_employee_create_last_name">Last name</string>
     <string name="edit_text_hint_employee_create_password">Password</string>
@@ -45,12 +48,15 @@
     <string name="alert_dialog_employee_create_validation_password_invalid">Passwords do not match.</string>
     <string name="alert_dialog_functionality_not_available">This functionality is not yet available.</string>
     <string name="alert_dialog_exit_transaction">Are you sure you want to exit? All data will be lost.</string>
+    <string name="alert_dialog_no_transaction_products">Please add a product before checking out.</string>
     <string name="alert_dialog_add_product">Add</string>
     <string name="alert_dialog_retrieve_product_failed">Unable to retrieve product.</string>
     <string name="alert_dialog_enter_product_lookupcode">Enter product lookup code:</string>
     <string name="validation_product_lookup_code">Product lookup code may not be empty.</string>
     <string name="validation_product_count">Product count must be a number and may not be negative.</string>
     <string name="intent_extra_employee">intent_extra_employee</string>
+    <string name="intent_extra_transaction">intent_extra_transaction</string>
+    <string name="intent_extra_transaction_entries">intent_extra_transaction_entries</string>
     <string name="intent_extra_product">intent_extra_product</string>
     <string name="title_activity_create_employee">CreateEmployeeActivity</string>
     <string name="title_activity_main">MainActivity</string>

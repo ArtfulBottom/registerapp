@@ -1,6 +1,7 @@
 package edu.uark.uarkregisterapp;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
@@ -14,6 +15,11 @@ import android.widget.EditText;
 import android.widget.TableLayout;
 
 import edu.uark.uarkregisterapp.models.api.Product;
+import edu.uark.uarkregisterapp.models.api.Transaction;
+import edu.uark.uarkregisterapp.models.api.enums.TransactionApiRequestStatus;
+import edu.uark.uarkregisterapp.models.transition.EmployeeTransition;
+import edu.uark.uarkregisterapp.models.transition.TransactionTransition;
+import edu.uark.uarkregisterapp.wrappers.DataWrapper;
 import edu.uark.uarkregisterapp.wrappers.TransactionViewWrapper;
 import edu.uark.uarkregisterapp.models.api.enums.ProductApiRequestStatus;
 import edu.uark.uarkregisterapp.models.api.services.ProductService;
@@ -25,6 +31,7 @@ public class CreateTransactionActivity extends AppCompatActivity {
         setContentView(R.layout.activity_create_transaction);
         setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
         this.transactionViewWrapper = new TransactionViewWrapper((TableLayout) this.findViewById(R.id.transaction_table_layout));
+        this.employeeTransition = this.getIntent().getParcelableExtra(this.getString(R.string.intent_extra_employee));
 
         ActionBar actionBar = this.getSupportActionBar();
         if (actionBar != null) {
@@ -34,7 +41,7 @@ public class CreateTransactionActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        if (!transactionViewWrapper.isTableEmpty()) {
+        if (!this.transactionViewWrapper.isTableEmpty()) {
             confirmExit();
         } else {
             super.onBackPressed();
@@ -45,7 +52,7 @@ public class CreateTransactionActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:  // Respond to the action bar's Up/Home button
-                if (!transactionViewWrapper.isTableEmpty()) {
+                if (!this.transactionViewWrapper.isTableEmpty()) {
                     confirmExit();
                 } else {
                     this.finish();
@@ -65,10 +72,43 @@ public class CreateTransactionActivity extends AppCompatActivity {
                     finish();
                 }
             }).
-            setNegativeButton(R.string.button_dismiss, null).
+            setNegativeButton(R.string.button_cancel, null).
             setCancelable(false).
             create().
             show();
+    }
+
+    public void checkoutButtonOnClick(View view) {
+        if (this.transactionViewWrapper.isTableEmpty()) {
+            new AlertDialog.Builder(CreateTransactionActivity.this).
+                    setMessage(R.string.alert_dialog_no_transaction_products).
+                    create().
+                    show();
+        } else {
+            Transaction transaction = this.transactionViewWrapper.constructTransactionObject(this.employeeTransition.getId());
+
+            if (transaction.getApiRequestStatus() == TransactionApiRequestStatus.INVALID_INPUT) {
+                new AlertDialog.Builder(CreateTransactionActivity.this).
+                        setMessage(transaction.getApiRequestMessage()).
+                        create().
+                        show();
+            }
+            else {
+                Intent intent = new Intent(getApplicationContext(), SummaryActivity.class);
+
+                intent.putExtra(
+                        getString(R.string.intent_extra_transaction),
+                        new TransactionTransition(transaction)
+                );
+
+                intent.putExtra(
+                        getString(R.string.intent_extra_transaction_entries),
+                        new DataWrapper(this.transactionViewWrapper.getTransactionEntries())
+                );
+
+                this.startActivity(intent);
+            }
+        }
     }
 
     public void addProductButtonOnClick(View view) {
@@ -118,5 +158,6 @@ public class CreateTransactionActivity extends AppCompatActivity {
         }
     }
 
+    private EmployeeTransition employeeTransition;
     private TransactionViewWrapper transactionViewWrapper;
 }

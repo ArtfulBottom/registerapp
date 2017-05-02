@@ -4,6 +4,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -16,7 +17,7 @@ import edu.uark.uarkregisterapp.models.api.fields.TransactionEntryFieldName;
 import edu.uark.uarkregisterapp.models.api.interfaces.ConvertToJsonInterface;
 import edu.uark.uarkregisterapp.models.api.interfaces.LoadFromJsonInterface;
 
-public class TransactionEntry implements ConvertToJsonInterface, LoadFromJsonInterface<TransactionEntry> {
+public class TransactionEntry implements ConvertToJsonInterface, LoadFromJsonInterface<TransactionEntry>, Serializable {
     private UUID id;
     public UUID getId() {
         return this.id;

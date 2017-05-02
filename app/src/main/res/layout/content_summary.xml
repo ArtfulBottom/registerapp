@@ -1,44 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="edu.uark.uarkregisterapp.SummaryActivity"
-    tools:showIn="@layout/activity_summary">
 
-    <TableLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:shrinkColumns="*">
-        <TableRow
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_weight="1">
-            <TextView
-                android:text="@string/summary_product"
-                android:layout_weight="1">
-            </TextView>
-            <TextView
-                android:text="@string/summary_price"
-                android:layout_weight="1">
-            </TextView>
-            <TextView
-                android:text="@string/summary_quantity"
-                android:layout_weight="1">
-            </TextView>
-        </TableRow>
-    </TableLayout>
+<RelativeLayout
+android:id="@+id/content_main"
+xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:paddingBottom="@dimen/activity_vertical_margin"
+android:paddingLeft="@dimen/activity_horizontal_margin"
+android:paddingRight="@dimen/activity_horizontal_margin"
+android:paddingTop="@dimen/activity_vertical_margin"
+app:layout_behavior="@string/appbar_scrolling_view_behavior"
+tools:context="edu.uark.uarkregisterapp.SummaryActivity"
+tools:showIn="@layout/activity_summary">
 
-    <!--<TextView
+    <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/text_margin"
-        android:text="@string/summary_product" />
-        -->
+        android:text="@string/button_order"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/button" />
 
+    <TextView
+        android:id="@+id/text_view_price_number"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/button"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="36dp" />
 
+    <TextView
+        android:id="@+id/text_view_total_price"
+        android:textSize="25sp"
+        android:layout_width="wrap_content"
+        android:textStyle="bold"
+        android:layout_height="wrap_content"
+        android:text="@string/text_view_total_price"
+        android:layout_marginBottom="11dp"
+        android:layout_above="@+id/text_view_price_number"
+        android:layout_centerHorizontal="true" />
 
-</android.support.v4.widget.NestedScrollView>
+</RelativeLayout>

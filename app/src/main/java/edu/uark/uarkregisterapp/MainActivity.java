@@ -31,7 +31,14 @@ public class MainActivity extends AppCompatActivity {
 	}
 
 	public void beginTransactionButtonOnClick(View view) {
-		this.startActivity(new Intent(getApplicationContext(), CreateTransactionActivity.class));
+		Intent intent = new Intent(getApplicationContext(), CreateTransactionActivity.class);
+
+		intent.putExtra(
+				getString(R.string.intent_extra_employee),
+				this.employeeTransition
+		);
+
+		this.startActivity(intent);
 	}
 
 	public void productSalesReportButtonOnClick(View view) {
