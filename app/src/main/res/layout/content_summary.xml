@@ -21,7 +21,9 @@ tools:showIn="@layout/activity_summary">
         android:text="@string/button_order"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
-        android:id="@+id/button" />
+        android:id="@+id/button"
+        android:onClick="orderButtonOnClick"/>
+
 
     <TextView
         android:id="@+id/text_view_price_number"

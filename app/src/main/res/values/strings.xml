@@ -54,6 +54,8 @@
     <string name="alert_dialog_add_product">Add</string>
     <string name="alert_dialog_retrieve_product_failed">Unable to retrieve product.</string>
     <string name="alert_dialog_enter_product_lookupcode">Enter product lookup code:</string>
+    <string name="alert_dialog_transaction_create">Creating transaction...</string>
+    <string name="alert_dialog_transaction_create_failed">An issue was encountered when attempting to create the transaction.</string>
     <string name="validation_product_lookup_code">Product lookup code may not be empty.</string>
     <string name="validation_product_count">Product count must be a number and may not be negative.</string>
     <string name="intent_extra_employee">intent_extra_employee</string>
