@@ -46,7 +46,9 @@
     <string name="alert_dialog_employee_create_validation_last_name">Last name may not be empty.</string>
     <string name="alert_dialog_employee_create_validation_password">Password may not be empty.</string>
     <string name="alert_dialog_employee_create_validation_password_invalid">Passwords do not match.</string>
+    <string name="alert_dialog_transaction_validation_quantity">Quantities may not be empty.</string>
     <string name="alert_dialog_functionality_not_available">This functionality is not yet available.</string>
+    <string name="alert_dialog_product_already_exists">Product already added.</string>
     <string name="alert_dialog_exit_transaction">Are you sure you want to exit? All data will be lost.</string>
     <string name="alert_dialog_no_transaction_products">Please add a product before checking out.</string>
     <string name="alert_dialog_add_product">Add</string>

@@ -37,13 +37,13 @@ public class TransactionTransition implements Parcelable {
         return this;
     }
 
-    private int totalAmount;
+    private double totalAmount;
 
-    public int getTotalAmount() {
+    public double getTotalAmount() {
         return this.totalAmount;
     }
 
-    public TransactionTransition setTotalAmount(int totalAmount) {
+    public TransactionTransition setTotalAmount(double totalAmount) {
         this.totalAmount = totalAmount;
         return this;
     }
@@ -85,7 +85,7 @@ public class TransactionTransition implements Parcelable {
     public void writeToParcel(Parcel destination, int flags) {
         destination.writeByteArray((new UUIDToByteConverterCommand()).setValueToConvert(this.id).execute());
         destination.writeByteArray((new UUIDToByteConverterCommand()).setValueToConvert(this.cashierId).execute());
-        destination.writeInt(this.totalAmount);
+        destination.writeDouble(this.totalAmount);
         destination.writeInt(this.classification.getValue());
         destination.writeByteArray((new UUIDToByteConverterCommand()).setValueToConvert(this.referenceId).execute());
         destination.writeLong(this.createdOn.getTime());
@@ -127,7 +127,7 @@ public class TransactionTransition implements Parcelable {
     public TransactionTransition(Parcel transactionTransitionParcel) {
         this.id = (new ByteToUUIDConverterCommand()).setValueToConvert(transactionTransitionParcel.createByteArray()).execute();
         this.cashierId = (new ByteToUUIDConverterCommand()).setValueToConvert(transactionTransitionParcel.createByteArray()).execute();
-        this.totalAmount = transactionTransitionParcel.readInt();
+        this.totalAmount = transactionTransitionParcel.readDouble();
         this.classification = TransactionClassification.mapValue(transactionTransitionParcel.readInt());
         this.referenceId = (new ByteToUUIDConverterCommand()).setValueToConvert(transactionTransitionParcel.createByteArray()).execute();
 

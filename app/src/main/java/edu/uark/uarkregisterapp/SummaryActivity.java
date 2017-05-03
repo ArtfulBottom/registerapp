@@ -34,7 +34,7 @@ public class SummaryActivity extends AppCompatActivity {
         }
 
         this.getTotalPriceTextView().setText("$" + this.transactionTransition.getTotalAmount());
-        //log();
+        log();
     }
 
     @Override
@@ -52,7 +52,7 @@ public class SummaryActivity extends AppCompatActivity {
         return (TextView)this.findViewById(R.id.text_view_price_number);
     }
 
-    /*public void log() {
+    public void log() {
         for (TransactionEntry entry : this.entries) {
             Log.d("ProductId = ", "" + entry.getProductId());
             Log.d("Quantity = ", "" + entry.getQuantity());
@@ -63,7 +63,7 @@ public class SummaryActivity extends AppCompatActivity {
         Log.d("Classification = ", "" + this.transactionTransition.getClassification());
         Log.d("ReferenceId = ", "" + this.transactionTransition.getReferenceId());
         Log.d("TotalAmount = ", "" + this.transactionTransition.getTotalAmount());
-    }*/
+    }
 
     private ArrayList<TransactionEntry> entries;
     private TransactionTransition transactionTransition;

@@ -3,7 +3,6 @@ package edu.uark.uarkregisterapp.wrappers;
 import android.content.Context;
 import android.graphics.Color;
 import android.text.InputType;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -16,6 +15,7 @@ import android.widget.TableRow;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.UUID;
 
 import edu.uark.uarkregisterapp.R;
@@ -38,7 +38,7 @@ public class TransactionViewWrapper extends TransactionViewConstants {
                 container.removeView(row);
                 container.invalidate();
 
-                getTransactionEntries().remove(row.getId() - getMinimumRequiredRows());
+                getProducts().remove(row.getId() - getMinimumRequiredRows());
                 resetRowIds();
             }
         });
@@ -90,16 +90,6 @@ public class TransactionViewWrapper extends TransactionViewConstants {
         return this;
     }
 
-    private TransactionViewWrapper addTransactionEntryToTable(Product product) {
-        TransactionEntry entry = new TransactionEntry();
-        entry.setProductId(product.getId());
-        entry.setUnitPrice(product.getPrice());
-        entry.setQuantity(product.getCount());
-        this.entries.add(entry);
-
-        return this;
-    }
-
     private TransactionViewWrapper resetRowIds() {
         this.rowId = this.minimumRequiredRows;
 
@@ -110,40 +100,64 @@ public class TransactionViewWrapper extends TransactionViewConstants {
         return this;
     }
 
+    private boolean checkProductIsUnique(Product product) {
+        for (int i = this.minimumRequiredRows; i < this.getTableLayout().getChildCount(); ++i) {
+            TableRow row = (TableRow) this.getTableLayout().getChildAt(i);
+            String rowLookupCode = ((TextView) row.getChildAt(this.lookupCodeTextViewPosition)).getText().toString();
+
+            if (rowLookupCode.equals(product.getLookupCode())) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
     private int getMinimumRequiredRows() {
         return this.minimumRequiredRows;
     }
 
-    public Transaction constructTransactionObject(UUID employeeId) {
+    public void constructTransactionAndTransactionEntries(UUID employeeId) throws NumberFormatException {
         double totalAmount = 0;
+        this.entries = new ArrayList<>();
+
         for (int i = this.minimumRequiredRows; i < this.getTableLayout().getChildCount(); ++i) {
             TableRow row = (TableRow) this.getTableLayout().getChildAt(i);
-            TransactionEntry entry = this.entries.get(i - this.minimumRequiredRows);
+            Product product = this.products.get(i - this.minimumRequiredRows);
             int selectedQuantity = Integer.parseInt(((EditText) row.getChildAt(this.quantityEditTextPosition)).getText().toString());
 
-            if (selectedQuantity > entry.getQuantity()) {
-                return (new Transaction()).
+            if (selectedQuantity > product.getCount()) {
+                this.transaction = (new Transaction()).
                         setApiRequestStatus(TransactionApiRequestStatus.INVALID_INPUT).
                         setApiRequestMessage("Quantity for " +
                                 ((TextView) row.getChildAt(this.lookupCodeTextViewPosition)).getText().toString() +
-                                " is too high.");
+                                " exceeds the amount available.");
+                return;
             }
             else {
-                entry.setQuantity(selectedQuantity);
-                totalAmount += entry.getUnitPrice() * entry.getQuantity();
+                this.entries.add((new TransactionEntry()).
+                        setProductId(product.getId()).
+                        setQuantity(selectedQuantity).
+                        setUnitPrice(product.getPrice()));
+
+                totalAmount += product.getPrice() * selectedQuantity;
             }
         }
 
-        return (new Transaction()).
+        this.transaction = (new Transaction()).
                 setCashierId(employeeId).
                 setClassification(TransactionClassification.SALE).
-                setTotalAmount((int) totalAmount);
+                setTotalAmount(totalAmount);
     }
 
-    public void addProductToTable(Product product, Context context) {
-        // TODO: Check for product uniqueness with this.checkProductIsUnique(product).
-        this.createTableRow(product, context).
-                addTransactionEntryToTable(product);
+    public boolean addProductToTable(Product product, Context context) {
+        if (checkProductIsUnique(product)) {
+            this.createTableRow(product, context);
+            this.products.add(product);
+            return true;
+        }
+
+        return false;
     }
 
     public boolean isTableEmpty() {
@@ -152,9 +166,19 @@ public class TransactionViewWrapper extends TransactionViewConstants {
 
     private int rowId = this.minimumRequiredRows; // First two rows are field descriptions and solid black line.
 
+    private ArrayList<Product> products;
+    public ArrayList<Product> getProducts() {
+        return this.products;
+    }
+
     private ArrayList<TransactionEntry> entries;
     public ArrayList<TransactionEntry> getTransactionEntries() {
         return this.entries;
+    }
+
+    private Transaction transaction;
+    public Transaction getTransaction() {
+        return this.transaction;
     }
 
     private TableLayout tableLayout;
@@ -167,6 +191,6 @@ public class TransactionViewWrapper extends TransactionViewConstants {
 
     public TransactionViewWrapper(TableLayout tableLayout) {
         this.tableLayout = tableLayout;
-        entries = new ArrayList<>();
+        this.products = new ArrayList<>();
     }
 }

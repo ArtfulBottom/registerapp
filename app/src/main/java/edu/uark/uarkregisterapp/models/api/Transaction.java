@@ -36,11 +36,11 @@ public class Transaction implements ConvertToJsonInterface, LoadFromJsonInterfac
         return this;
     }
 
-    private int totalAmount;
-    public int getTotalAmount() {
+    private double totalAmount;
+    public double getTotalAmount() {
         return this.totalAmount;
     }
-    public Transaction setTotalAmount(int totalAmount) {
+    public Transaction setTotalAmount(double totalAmount) {
         this.totalAmount = totalAmount;
         return this;
     }
@@ -108,7 +108,7 @@ public class Transaction implements ConvertToJsonInterface, LoadFromJsonInterfac
             this.cashierId = UUID.fromString(value);
         }
 
-        this.totalAmount = rawJsonObject.optInt(TransactionFieldName.TOTAL_AMOUNT.getFieldName());
+        this.totalAmount = rawJsonObject.optDouble(TransactionFieldName.TOTAL_AMOUNT.getFieldName());
         this.classification = TransactionClassification.mapName(
                 rawJsonObject.optString(TransactionFieldName.CLASSIFICATION.getFieldName())
         );
@@ -160,7 +160,7 @@ public class Transaction implements ConvertToJsonInterface, LoadFromJsonInterfac
     public Transaction() {
         this.id = new UUID(0, 0);
         this.cashierId = new UUID(0, 0);
-        this.totalAmount = 0;
+        this.totalAmount = 0.0;
         this.classification = TransactionClassification.NOT_DEFINED;
         this.createdOn = new Date();
         this.referenceId = new UUID(0, 0);

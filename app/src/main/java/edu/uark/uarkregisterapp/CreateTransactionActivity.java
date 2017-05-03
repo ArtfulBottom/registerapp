@@ -14,8 +14,12 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TableLayout;
 
+import java.util.ArrayList;
+import java.util.InputMismatchException;
+
 import edu.uark.uarkregisterapp.models.api.Product;
 import edu.uark.uarkregisterapp.models.api.Transaction;
+import edu.uark.uarkregisterapp.models.api.TransactionEntry;
 import edu.uark.uarkregisterapp.models.api.enums.TransactionApiRequestStatus;
 import edu.uark.uarkregisterapp.models.transition.EmployeeTransition;
 import edu.uark.uarkregisterapp.models.transition.TransactionTransition;
@@ -80,18 +84,20 @@ public class CreateTransactionActivity extends AppCompatActivity {
 
     public void checkoutButtonOnClick(View view) {
         if (this.transactionViewWrapper.isTableEmpty()) {
-            new AlertDialog.Builder(CreateTransactionActivity.this).
-                    setMessage(R.string.alert_dialog_no_transaction_products).
-                    create().
-                    show();
+            this.displayAlertDialog(R.string.alert_dialog_no_transaction_products);
         } else {
-            Transaction transaction = this.transactionViewWrapper.constructTransactionObject(this.employeeTransition.getId());
+            try {
+                this.transactionViewWrapper.constructTransactionAndTransactionEntries(this.employeeTransition.getId());
+            } catch (NumberFormatException e) {
+                this.displayAlertDialog(R.string.alert_dialog_transaction_validation_quantity);
+                return;
+            }
+
+            Transaction transaction = this.transactionViewWrapper.getTransaction();
+            ArrayList<TransactionEntry> entries = this.transactionViewWrapper.getTransactionEntries();
 
             if (transaction.getApiRequestStatus() == TransactionApiRequestStatus.INVALID_INPUT) {
-                new AlertDialog.Builder(CreateTransactionActivity.this).
-                        setMessage(transaction.getApiRequestMessage()).
-                        create().
-                        show();
+                this.displayAlertDialog(transaction.getApiRequestMessage());
             }
             else {
                 Intent intent = new Intent(getApplicationContext(), SummaryActivity.class);
@@ -103,7 +109,7 @@ public class CreateTransactionActivity extends AppCompatActivity {
 
                 intent.putExtra(
                         getString(R.string.intent_extra_transaction_entries),
-                        new DataWrapper(this.transactionViewWrapper.getTransactionEntries())
+                        new DataWrapper(entries)
                 );
 
                 this.startActivity(intent);
@@ -130,7 +136,9 @@ public class CreateTransactionActivity extends AppCompatActivity {
     }
 
     public void addProductToView(Product product) {
-        transactionViewWrapper.addProductToTable(product, this.getApplicationContext());
+        if (!transactionViewWrapper.addProductToTable(product, this.getApplicationContext())) {
+            this.displayAlertDialog(R.string.alert_dialog_product_already_exists);
+        }
     }
 
     private class AddProductTask extends AsyncTask<String, Void, Product> {
@@ -147,15 +155,26 @@ public class CreateTransactionActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(Product product) {
             if (product.getApiRequestStatus() != ProductApiRequestStatus.OK) {
-                new AlertDialog.Builder(CreateTransactionActivity.this).
-                    setMessage(R.string.alert_dialog_retrieve_product_failed).
-                    create().
-                    show();
+                displayAlertDialog(R.string.alert_dialog_retrieve_product_failed);
             }
             else {
                 addProductToView(product);
             }
         }
+    }
+
+    private void displayAlertDialog(String message) {
+        new AlertDialog.Builder(CreateTransactionActivity.this).
+                setMessage(message).
+                create().
+                show();
+    }
+
+    private void displayAlertDialog(int stringId) {
+        new AlertDialog.Builder(CreateTransactionActivity.this).
+                setMessage(stringId).
+                create().
+                show();
     }
 
     private EmployeeTransition employeeTransition;
