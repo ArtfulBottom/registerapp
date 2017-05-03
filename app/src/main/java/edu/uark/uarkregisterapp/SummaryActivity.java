@@ -20,6 +20,8 @@ import edu.uark.uarkregisterapp.models.api.Transaction;
 import edu.uark.uarkregisterapp.models.api.TransactionEntry;
 import edu.uark.uarkregisterapp.models.api.enums.TransactionApiRequestStatus;
 import edu.uark.uarkregisterapp.models.api.enums.TransactionClassification;
+import edu.uark.uarkregisterapp.models.api.enums.TransactionEntryApiMethod;
+import edu.uark.uarkregisterapp.models.api.services.TransactionEntryService;
 import edu.uark.uarkregisterapp.models.api.services.TransactionService;
 import edu.uark.uarkregisterapp.models.transition.EmployeeTransition;
 import edu.uark.uarkregisterapp.models.transition.TransactionTransition;
@@ -65,6 +67,12 @@ public class SummaryActivity extends AppCompatActivity {
             return;
         }
 
+        for(TransactionEntry entry : entries) {
+            (new CreateTransactionEntryTask()).execute(
+                    entry.setTransactionId(this.transactionTransition.getId())
+            );
+        }
+
         (new CreateTransactionTask()).execute(
                 (new Transaction()).
                         setId(this.transactionTransition.getId()).
@@ -74,12 +82,6 @@ public class SummaryActivity extends AppCompatActivity {
                         setReferenceId(this.transactionTransition.getReferenceId()).
                         setCreatedOn(this.transactionTransition.getCreatedOn())
         );
-
-        for(TransactionEntry entry : entries) {
-            (new CreateTransactionEntryTask()).execute(
-                    entry.setTransactionId(this.transactionTransition.getId())
-            );
-        }
     }
 
 
@@ -105,8 +107,6 @@ public class SummaryActivity extends AppCompatActivity {
     private ArrayList<TransactionEntry> entries;
     private TransactionTransition transactionTransition;
 
-
-
     private class CreateTransactionTask extends AsyncTask<Transaction, Void, Transaction> {
         @Override
         protected void onPreExecute() {
@@ -116,7 +116,6 @@ public class SummaryActivity extends AppCompatActivity {
                     show();
             return;
         }
-
 
         @Override
         protected Transaction doInBackground(Transaction... transactions) {
@@ -128,11 +127,8 @@ public class SummaryActivity extends AppCompatActivity {
             }
         }
 
-
         @Override
         protected void onPostExecute(Transaction transaction) {
-            this.createTransactionAlert.dismiss();
-
             if (transaction.getApiRequestStatus() != TransactionApiRequestStatus.OK) {
                 new AlertDialog.Builder(SummaryActivity.this).
                         setMessage(R.string.alert_dialog_transaction_create_failed).
@@ -144,9 +140,38 @@ public class SummaryActivity extends AppCompatActivity {
             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
             startActivity(intent);
         }
-
-        private AlertDialog createTransactionAlert;
     }
 
+    private class CreateTransactionEntryTask extends AsyncTask<TransactionEntry, Void, TransactionEntry> {
+        @Override
+        protected void onPreExecute() {
+            new AlertDialog.Builder(SummaryActivity.this).
+                    setMessage(R.string.alert_dialog_transaction_create).
+                    create().
+                    show();
+            return;
+        }
+
+        @Override
+        protected TransactionEntry doInBackground(TransactionEntry... entries) {
+            if (entries.length > 0) {
+                return (new TransactionEntryService()).putTransactionEntry(entries[0]);
+            } else {
+                return (new TransactionEntry()).
+                        setApiRequestStatus(TransactionApiRequestStatus.NOT_FOUND);
+            }
+        }
+
+        @Override
+        protected void onPostExecute(TransactionEntry entry) {
+            if (entry.getApiRequestStatus() != TransactionApiRequestStatus.OK) {
+                new AlertDialog.Builder(SummaryActivity.this).
+                        setMessage(R.string.alert_dialog_transaction_create_failed).
+                        create().
+                        show();
+                return;
+            }
+        }
+    }
 
 }
