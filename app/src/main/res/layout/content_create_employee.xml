@@ -31,10 +31,19 @@
         android:layout_marginTop="5dp"/>
 
     <EditText
+        android:id="@+id/edit_text_employee_create_classification"
+        android:hint="@string/edit_text_hint_employee_create_classification"
+        android:inputType="text"
+        android:layout_below="@+id/edit_text_employee_create_last_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"/>
+
+    <EditText
         android:id="@+id/edit_text_employee_create_password"
         android:hint="@string/edit_text_hint_employee_create_password"
         android:inputType="textPassword"
-        android:layout_below="@+id/edit_text_employee_create_last_name"
+        android:layout_below="@+id/edit_text_employee_create_classification"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"/>

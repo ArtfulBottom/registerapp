@@ -60,7 +60,7 @@ public class CreateEmployeeActivity extends AppCompatActivity {
 				setFirstName(this.getFirstNameEditText().getText().toString()).
 				setLastName(this.getLastNameEditText().getText().toString()).
 				setPassword(this.getPasswordEditText().getText().toString()).
-				setClassification(EmployeeClassification.GENERAL_MANAGER)
+				setClassification(this.getClassification(this.getClassificationEditText()))//EmployeeClassification.GENERAL_MANAGER)
 		);
 	}
 
@@ -80,6 +80,30 @@ public class CreateEmployeeActivity extends AppCompatActivity {
 		return (EditText) this.findViewById(R.id.edit_text_employee_create_password_confirm);
 	}
 
+	// adding begins
+	private EditText getClassificationEditText(){
+		return (EditText) this.findViewById(R.id.edit_text_employee_create_classification);
+	}
+
+	private EmployeeClassification getClassification(EditText classification_EditText){
+		EmployeeClassification classification;
+		if(classification_EditText.getText().toString().equalsIgnoreCase("General Manager")){
+			classification = EmployeeClassification.GENERAL_MANAGER;
+		}
+		else if(classification_EditText.getText().toString().equalsIgnoreCase("Shift Manager")){
+			classification = EmployeeClassification.SHIFT_MANAGER;
+		}
+		else if(classification_EditText.getText().toString().equalsIgnoreCase("Cashier")){
+			classification = EmployeeClassification.CASHIER;
+		}
+		else{
+			classification = EmployeeClassification.NOT_DEFINED;
+		}
+
+		return classification;
+	}
+	// adding ends
+
 	private boolean validateInput() {
 		boolean validInput = true;
 
@@ -93,6 +117,16 @@ public class CreateEmployeeActivity extends AppCompatActivity {
 			this.getLastNameEditText().requestFocus();
 			validInput = false;
 		}
+
+		// adding begins
+		if (validInput && StringUtils.isBlank(this.getClassificationEditText().getText().toString())) {
+			this.displayValidationAlert(R.string.alert_dialog_employee_create_validation_classification);
+			this.getClassificationEditText().requestFocus();
+			validInput = false;
+		}
+
+		// adding ends
+
 		if (validInput && StringUtils.isBlank(this.getPasswordEditText().getText().toString())) {
 			this.displayValidationAlert(R.string.alert_dialog_employee_create_validation_password);
 			this.getLastNameEditText().requestFocus();

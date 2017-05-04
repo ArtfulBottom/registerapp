@@ -29,6 +29,7 @@
     <string name="text_view_total_price">Total Price:</string>
     <string name="edit_text_hint_employee_create_first_name">First name</string>
     <string name="edit_text_hint_employee_create_last_name">Last name</string>
+    <string name="edit_text_hint_employee_create_classification">Classification</string>
     <string name="edit_text_hint_employee_create_password">Password</string>
     <string name="edit_text_hint_employee_create_password_confirm">Confirm password</string>
     <string name="alert_dialog_no_employees_exist">No employees exist, please create an employee now.</string>
@@ -44,6 +45,7 @@
     <string name="alert_dialog_product_save_failure">An issue was encountered when attempting to save the product. The changes were not saved.</string>
     <string name="alert_dialog_employee_create_validation_first_name">First name may not be empty.</string>
     <string name="alert_dialog_employee_create_validation_last_name">Last name may not be empty.</string>
+    <string name="alert_dialog_employee_create_validation_classification">classification may not be empty.</string>
     <string name="alert_dialog_employee_create_validation_password">Password may not be empty.</string>
     <string name="alert_dialog_employee_create_validation_password_invalid">Passwords do not match.</string>
     <string name="alert_dialog_transaction_validation_quantity">Quantities may not be empty.</string>

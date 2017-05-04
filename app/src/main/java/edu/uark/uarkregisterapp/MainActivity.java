@@ -26,10 +26,79 @@ public class MainActivity extends AppCompatActivity {
 	@Override
 	protected void onStart() {
 		super.onStart();
+        //adding begins
+		/*View button_create_employee, button_report_product, button_report_cashier,button_start_transaction;
 
-		this.getEmployeeWelcomeTextView().setText("Welcome " + this.employeeTransition.getFirstName() + " (" + this.employeeTransition.getEmployeeId() + ")!");
+		button_start_transaction = this.findViewById(R.id.button_begin_transaction);
+		button_create_employee = this.findViewById(R.id.button_create_employee);
+		button_report_product = this.findViewById(R.id.button_product_sales_report);
+		button_report_cashier = this.findViewById(R.id.button_cashier_sales_report);
+
+		if(this.employeeTransition.getClassification().getValue() == 3) // cashier
+		{
+			button_create_employee.setVisibility(View.GONE);
+			button_report_product.setVisibility(View.GONE);
+			button_report_cashier.setVisibility(View.GONE);
+		}
+		else if (this.employeeTransition.getClassification().getValue() == 2) // shift manager
+		{
+			button_start_transaction.setVisibility(View.GONE);
+			button_create_employee.setVisibility(View.GONE);
+		}
+		else if(this.employeeTransition.getClassification().getValue() == 1) // general manager
+		{
+			button_start_transaction.setVisibility(View.GONE);
+		}
+		else // not defined
+		{
+			button_start_transaction.setVisibility(View.GONE);
+			button_create_employee.setVisibility(View.GONE);
+			button_report_product.setVisibility(View.GONE);
+			button_report_cashier.setVisibility(View.GONE);
+		}*/
+
+
+        // adding ends
+		this.getEmployeeWelcomeTextView().setText("Welcome " + this.employeeTransition.getFirstName() + " (" + this.employeeTransition.getClassification().toString() + "  " + this.employeeTransition.getEmployeeId() + ")!");
 	}
 
+	@Override
+	protected void onResume(){
+		super.onResume();
+		//adding begins
+		View button_create_employee, button_report_product, button_report_cashier,button_start_transaction;
+
+		button_start_transaction = this.findViewById(R.id.button_begin_transaction);
+		button_create_employee = this.findViewById(R.id.button_create_employee);
+		button_report_product = this.findViewById(R.id.button_product_sales_report);
+		button_report_cashier = this.findViewById(R.id.button_cashier_sales_report);
+
+		if(this.employeeTransition.getClassification().getValue() == 3) // cashier
+		{
+			button_create_employee.setVisibility(View.GONE);
+			button_report_product.setVisibility(View.GONE);
+			button_report_cashier.setVisibility(View.GONE);
+		}
+		else if (this.employeeTransition.getClassification().getValue() == 2) // shift manager
+		{
+			button_start_transaction.setVisibility(View.GONE);
+			button_create_employee.setVisibility(View.GONE);
+		}
+		else if(this.employeeTransition.getClassification().getValue() == 1) // general manager
+		{
+			button_start_transaction.setVisibility(View.GONE);
+		}
+		else // not defined
+		{
+			button_start_transaction.setVisibility(View.GONE);
+			button_create_employee.setVisibility(View.GONE);
+			button_report_product.setVisibility(View.GONE);
+			button_report_cashier.setVisibility(View.GONE);
+		}
+
+
+		// adding ends
+	}
 	public void beginTransactionButtonOnClick(View view) {
 		Intent intent = new Intent(getApplicationContext(), CreateTransactionActivity.class);
 
