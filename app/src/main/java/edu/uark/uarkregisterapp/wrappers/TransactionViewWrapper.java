@@ -134,6 +134,12 @@ public class TransactionViewWrapper extends TransactionViewConstants {
                                 " exceeds the amount available.");
                 return;
             }
+            else if (selectedQuantity < 1) {
+                this.transaction = (new Transaction()).
+                        setApiRequestStatus(TransactionApiRequestStatus.INVALID_INPUT).
+                        setApiRequestMessage("Quantities cannot be zero.");
+                return;
+            }
             else {
                 this.entries.add((new TransactionEntry()).
                         setProductId(product.getId()).
