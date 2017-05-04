@@ -123,8 +123,8 @@ public class TransactionEntry implements ConvertToJsonInterface, LoadFromJsonInt
 
         try {
             jsonObject.put(TransactionEntryFieldName.ID.getFieldName(), this.id.toString());
-            jsonObject.put(TransactionEntryFieldName.TRANSACTION_ID.getFieldName(), this.transactionId);
-            jsonObject.put(TransactionEntryFieldName.PRODUCT_ID.getFieldName(), this.productId);
+            jsonObject.put(TransactionEntryFieldName.TRANSACTION_ID.getFieldName(), this.transactionId.toString());
+            jsonObject.put(TransactionEntryFieldName.PRODUCT_ID.getFieldName(), this.productId.toString());
             jsonObject.put(TransactionEntryFieldName.QUANTITY.getFieldName(), this.quantity);
             jsonObject.put(TransactionEntryFieldName.UNIT_PRICE.getFieldName(), this.unitPrice);
             jsonObject.put(TransactionEntryFieldName.API_REQUEST_MESSAGE.getFieldName(), this.apiRequestMessage);

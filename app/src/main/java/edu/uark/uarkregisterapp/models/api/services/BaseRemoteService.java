@@ -1,5 +1,7 @@
 package edu.uark.uarkregisterapp.models.api.services;
 
+import android.util.Log;
+
 import org.apache.commons.lang3.StringUtils;
 import org.json.JSONException;
 import org.json.JSONObject;

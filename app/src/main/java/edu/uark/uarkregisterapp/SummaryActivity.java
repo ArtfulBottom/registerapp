@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 
 import edu.uark.uarkregisterapp.models.api.Transaction;
 import edu.uark.uarkregisterapp.models.api.TransactionEntry;
@@ -69,22 +70,14 @@ public class SummaryActivity extends AppCompatActivity {
             return;
         }
 
-        (new CreateTransactionTask()).execute(
-                (new Transaction()).
-                        setId(this.transactionTransition.getId()).
-                        setCashierId(this.transactionTransition.getCashierId()).
-                        setTotalAmount(this.transactionTransition.getTotalAmount()).
-                        setClassification(this.transactionTransition.getClassification()).
-                        setReferenceId(this.transactionTransition.getReferenceId()).
-                        setCreatedOn(this.transactionTransition.getCreatedOn())
+        (new CreateTransactionTask()).execute(new Transaction().
+                    setId(this.transactionTransition.getId()).
+                    setCashierId(this.transactionTransition.getCashierId()).
+                    setTotalAmount(this.transactionTransition.getTotalAmount()).
+                    setClassification(this.transactionTransition.getClassification()).
+                    setReferenceId(this.transactionTransition.getReferenceId()).
+                    setCreatedOn(this.transactionTransition.getCreatedOn())
         );
-
-        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-        intent.putExtra(
-                getString(R.string.intent_extra_employee),
-                this.employeeTransition
-        );
-        startActivity(intent);
     }
 
 
@@ -141,12 +134,16 @@ public class SummaryActivity extends AppCompatActivity {
             }
 
             for(TransactionEntry entry : entries) {
-                (new CreateTransactionEntryTask()).execute(
-                        entry.setTransactionId(transaction.getId())
-                );
+                (new CreateTransactionEntryTask()).
+                        execute(entry.setTransactionId(transaction.getId()));
             }
 
-            return;
+            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+            intent.putExtra(
+                    getString(R.string.intent_extra_employee),
+                    employeeTransition
+            );
+            startActivity(intent);
         }
     }
 
@@ -174,7 +171,7 @@ public class SummaryActivity extends AppCompatActivity {
         protected void onPostExecute(TransactionEntry entry) {
             if (entry.getApiRequestStatus() != TransactionApiRequestStatus.OK) {
                 new AlertDialog.Builder(SummaryActivity.this).
-                        setMessage(R.string.alert_dialog_transaction_create_failed).
+                        setMessage(R.string.alert_dialog_transaction_entry_create_failed).
                         create().
                         show();
                 return;
