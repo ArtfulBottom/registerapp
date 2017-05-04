@@ -46,7 +46,7 @@ public class SummaryActivity extends AppCompatActivity {
         }
 
         this.getTotalPriceTextView().setText(String.format("$%.2f", this.transactionTransition.getTotalAmount()));
-        log();
+        //log();
     }
 
     @Override
@@ -79,12 +79,6 @@ public class SummaryActivity extends AppCompatActivity {
                         setCreatedOn(this.transactionTransition.getCreatedOn())
         );
 
-        for(TransactionEntry entry : entries) {
-            (new CreateTransactionEntryTask()).execute(
-                    entry.setTransactionId(this.newTransactionId)
-            );
-        }
-
         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
         intent.putExtra(
                 getString(R.string.intent_extra_employee),
@@ -95,7 +89,7 @@ public class SummaryActivity extends AppCompatActivity {
 
 
 
-    public void log() {
+    /*public void log() {
         for (TransactionEntry entry : this.entries) {
             Log.d("ProductId = ", "" + entry.getProductId());
             Log.d("Quantity = ", "" + entry.getQuantity());
@@ -106,7 +100,7 @@ public class SummaryActivity extends AppCompatActivity {
         Log.d("Classification = ", "" + this.transactionTransition.getClassification());
         Log.d("ReferenceId = ", "" + this.transactionTransition.getReferenceId());
         Log.d("TotalAmount = ", "" + this.transactionTransition.getTotalAmount());
-    }
+    }*/
 
     private boolean validateInput() {
         //TODO
@@ -146,7 +140,12 @@ public class SummaryActivity extends AppCompatActivity {
                 return;
             }
 
-            newTransactionId = transaction.getId();
+            for(TransactionEntry entry : entries) {
+                (new CreateTransactionEntryTask()).execute(
+                        entry.setTransactionId(transaction.getId())
+                );
+            }
+
             return;
         }
     }
@@ -183,6 +182,5 @@ public class SummaryActivity extends AppCompatActivity {
         }
     }
 
-    private UUID newTransactionId;
     private EmployeeTransition employeeTransition;
 }
