@@ -15,6 +15,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.UUID;
 
 import edu.uark.uarkregisterapp.models.api.Transaction;
 import edu.uark.uarkregisterapp.models.api.TransactionEntry;
@@ -45,7 +46,7 @@ public class SummaryActivity extends AppCompatActivity {
         }
 
         this.getTotalPriceTextView().setText(String.format("$%.2f", this.transactionTransition.getTotalAmount()));
-        //log();
+        log();
     }
 
     @Override
@@ -68,12 +69,6 @@ public class SummaryActivity extends AppCompatActivity {
             return;
         }
 
-        for(TransactionEntry entry : entries) {
-            (new CreateTransactionEntryTask()).execute(
-                    entry.setTransactionId(this.transactionTransition.getId())
-            );
-        }
-
         (new CreateTransactionTask()).execute(
                 (new Transaction()).
                         setId(this.transactionTransition.getId()).
@@ -83,6 +78,13 @@ public class SummaryActivity extends AppCompatActivity {
                         setReferenceId(this.transactionTransition.getReferenceId()).
                         setCreatedOn(this.transactionTransition.getCreatedOn())
         );
+
+        for(TransactionEntry entry : entries) {
+            (new CreateTransactionEntryTask()).execute(
+                    entry.setTransactionId(this.newTransactionId)
+            );
+        }
+
         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
         intent.putExtra(
                 getString(R.string.intent_extra_employee),
@@ -93,7 +95,7 @@ public class SummaryActivity extends AppCompatActivity {
 
 
 
-    /*public void log() {
+    public void log() {
         for (TransactionEntry entry : this.entries) {
             Log.d("ProductId = ", "" + entry.getProductId());
             Log.d("Quantity = ", "" + entry.getQuantity());
@@ -104,7 +106,7 @@ public class SummaryActivity extends AppCompatActivity {
         Log.d("Classification = ", "" + this.transactionTransition.getClassification());
         Log.d("ReferenceId = ", "" + this.transactionTransition.getReferenceId());
         Log.d("TotalAmount = ", "" + this.transactionTransition.getTotalAmount());
-    }*/
+    }
 
     private boolean validateInput() {
         //TODO
@@ -144,6 +146,7 @@ public class SummaryActivity extends AppCompatActivity {
                 return;
             }
 
+            newTransactionId = transaction.getId();
             return;
         }
     }
@@ -179,5 +182,7 @@ public class SummaryActivity extends AppCompatActivity {
             }
         }
     }
+
+    private UUID newTransactionId;
     private EmployeeTransition employeeTransition;
 }
