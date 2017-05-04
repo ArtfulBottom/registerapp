@@ -112,6 +112,11 @@ public class CreateTransactionActivity extends AppCompatActivity {
                         new DataWrapper(entries)
                 );
 
+                intent.putExtra(
+                        getString(R.string.intent_extra_employee),
+                        this.employeeTransition
+                );
+
                 this.startActivity(intent);
             }
         }

@@ -37,6 +37,7 @@ public class SummaryActivity extends AppCompatActivity {
 
         this.transactionTransition = this.getIntent().getParcelableExtra(this.getString(R.string.intent_extra_transaction));
         this.entries = ((DataWrapper) this.getIntent().getSerializableExtra(this.getString(R.string.intent_extra_transaction_entries))).getEntries();
+        this.employeeTransition = this.getIntent().getParcelableExtra(this.getString(R.string.intent_extra_employee));
 
         ActionBar actionBar = this.getSupportActionBar();
         if (actionBar != null) {
@@ -82,6 +83,12 @@ public class SummaryActivity extends AppCompatActivity {
                         setReferenceId(this.transactionTransition.getReferenceId()).
                         setCreatedOn(this.transactionTransition.getCreatedOn())
         );
+        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+        intent.putExtra(
+                getString(R.string.intent_extra_employee),
+                this.employeeTransition
+        );
+        startActivity(intent);
     }
 
 
@@ -137,8 +144,7 @@ public class SummaryActivity extends AppCompatActivity {
                 return;
             }
 
-            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-            startActivity(intent);
+            return;
         }
     }
 
@@ -173,5 +179,5 @@ public class SummaryActivity extends AppCompatActivity {
             }
         }
     }
-
+    private EmployeeTransition employeeTransition;
 }
